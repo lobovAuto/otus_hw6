@@ -13,8 +13,6 @@ set(INCLUDE_DIRECTORIES
 
 add_executable(${TARGET_NAME}
     ${CMAKE_SOURCE_DIR}/main/main.cpp
-    ${CMAKE_SOURCE_DIR}/list/list.cpp
-    ${CMAKE_SOURCE_DIR}/vector/vector.cpp
 )
 
 target_include_directories(${TARGET_NAME} PRIVATE ${INCLUDE_DIRECTORIES})
