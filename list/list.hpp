@@ -60,11 +60,12 @@ public:
         list_size ++;
         Elem<T> * pe = new Elem<T>(t);
         end->set_next(pe);
+        pe->set_prev(end);
         end = pe;
     }
     void insert(T *t, unsigned int pos){
         list_size ++;
-        T * target = start; //менять на Elem
+        Elem<T> * target = start; //менять на Elem
         for (unsigned int i = 0; i<pos; ++i){
             target = target->get_next();
         }
@@ -72,8 +73,34 @@ public:
         (target->get_prev())->set_next(pe);
         target->set_prev(pe);
     }
-    void erase(unsigned int){
-
+    void erase(unsigned int in){
+        if (!list_size){return;}
+        if (!in){
+            (start->get_next())->set_prev(NULL);
+            Elem<T> * temp = start;
+            start=start->get_next();
+            delete temp;
+        } else if (in==list_size){
+            Elem<T> * temp = end;
+            (end->get_prev())->set_next(NULL);
+            end = end->get_prev();
+            delete temp;
+        } else {
+            Elem<T> * target = start;
+            for (unsigned int i=0; i<=in; ++i){
+                if (i==0) continue;
+                target=target->get_next();
+            }
+            (target->get_prev())->set_next(target->get_next());
+            if (target->get_next()==NULL){
+                (target->get_prev())->set_next(NULL);
+            } else {
+                (target->get_next())->set_prev(target->get_prev());
+            }
+            delete target;
+        }
+        list_size--;
+        
     }
     unsigned int size(){return list_size;}
     
@@ -81,8 +108,10 @@ public:
         if (in>=list_size){return 0;}
         Elem<T> * target = start;
         for (unsigned int i=0; i<in; ++i){
+            // if (target->get_next()==NULL){continue;}
             target = target->get_next();
         }
+        if (target==NULL){return 0;}
         return *(target->get_value());
     }
 };
