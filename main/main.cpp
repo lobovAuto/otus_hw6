@@ -19,6 +19,9 @@ template <typename T> void print_vec(Vector<T> & vec){
 }
 
 int main(/*int argc, char *argv[]*/){
+
+    std::cout<<"Демонстрация пользовательского кода со списковым контейнером"<<std::endl;
+
     List<unsigned int> a((unsigned int)0);
     for (unsigned int i=1; i<COUNT; ++i){
         a.push_back(i);
@@ -41,6 +44,8 @@ int main(/*int argc, char *argv[]*/){
     a.insert(30, 9);
     print_list(a);
 
+    std::cout<<"Демонстрация пользовательского кода с последовательным контейнером"<<std::endl;
+
     Vector<unsigned int> b;
     for (unsigned int i=0; i<COUNT; ++i){
         b.push_back(i);
@@ -59,4 +64,14 @@ int main(/*int argc, char *argv[]*/){
  
     b.insert(30,9);
     print_vec(b);
+
+    std::cout<<"Демонстрация пользовательского кода с итератором"<<std::endl;
+
+    VectorAlloc<unsigned int> it(b);
+    it.end();
+    std::cout<<*it<<std::endl;
+    ++it;
+    std::cout<<*it<<std::endl;
+    --it;
+    std::cout<<*it<<std::endl;
 }

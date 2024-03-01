@@ -1,11 +1,18 @@
 #pragma once
 
 #define BASE_ALLOC 10
+
+template <class T> class VectorAlloc;
 template <class T> class Vector {
+    friend class VectorAlloc<T>;
+
     unsigned int fact_syze;
     unsigned int alloc_syze;
     T * start;
     T * end;
+    T * get_start(){return start;}
+    T * get_end(){return end;}
+    void update_end(){end=start+fact_syze-1;}
     void fail(){
         std::cerr<<"Нехватка памяти!"<<std::endl;
         exit(-1);
@@ -25,6 +32,7 @@ public:
     Vector(){
         start = new T[BASE_ALLOC];
         if (!start){fail();}
+        end = start+fact_syze;
         alloc_syze=BASE_ALLOC;
     }
     unsigned int size(){return fact_syze;}
@@ -32,6 +40,7 @@ public:
         if (alloc_syze==fact_syze){stratch();}
         start[fact_syze]=t;
         fact_syze++;
+        update_end();
     }
     void insert(T t, unsigned int pos){
         if (alloc_syze==fact_syze){stratch();}
@@ -40,17 +49,39 @@ public:
         }
         start[pos]=t;
         fact_syze++;
+        update_end();
     }
     void erase(unsigned int pos){
         for (unsigned int i=pos; i<fact_syze; i++){
             start[i]=start[i+1];
         }
         fact_syze--;
+        update_end();
     }
     T operator[](unsigned int pos){
         return start[pos];
     }
     ~Vector(){
         delete [] start;
+    }
+};
+
+template <class T> class VectorAlloc{
+    Vector<T> & vector;
+    T * pnt;
+public:
+    VectorAlloc(Vector<T> & t):vector(t){}
+    void begin(){pnt = vector.get_start();}
+    void end(){pnt = vector.get_end();}
+    T operator*(){return *pnt;}
+    VectorAlloc & operator++(){
+        if (pnt==vector.get_end()){return *this;}
+        pnt = pnt + 1;
+        return *this;    
+    }
+    VectorAlloc & operator--(){
+        if (pnt==vector.get_start()){return *this;}
+        pnt = pnt - 1;
+        return *this;  
     }
 };
