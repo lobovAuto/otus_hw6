@@ -44,6 +44,12 @@ public:
         Elem<T> * pe = new Elem<T>(t);
         start=end=pe;
     }
+    List(T t){
+        list_size++;
+        T * temp = new T(t);
+        Elem<T> * pe = new Elem<T>(temp);
+        start=end=pe;
+    }
     void push_back(T * t){
         if (!list_size){
             list_size ++;
