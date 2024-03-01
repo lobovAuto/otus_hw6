@@ -18,11 +18,8 @@ public:
         next = NULL;
         prev = NULL;
     }
-    //Вставка после n
-    Elem<T>(T * t, Elem *n){
-        elem = t;
-        prev = n;
-        n->set_next(this);
+    ~Elem<T>(){
+        delete elem;
     }
     void set_next(Elem *n){
         next = n;
@@ -33,7 +30,6 @@ public:
     Elem * get_next (){return next;}
     Elem * get_prev (){return prev;}
     T * get_value(){return elem;}
-    //Вероятно, еще парочку надо
 };
 
 template <class T> class List{
@@ -63,15 +59,36 @@ public:
         pe->set_prev(end);
         end = pe;
     }
+    void push_back(T t){
+        T * temp = new T (t);
+        push_back(temp);
+    }
     void insert(T *t, unsigned int pos){
-        list_size ++;
-        Elem<T> * target = start; //менять на Elem
-        for (unsigned int i = 0; i<pos; ++i){
-            target = target->get_next();
+        if (!pos){
+            Elem<T> * pe = new Elem<T>(t);
+            start->set_prev(pe);
+            pe->set_next(start);
+            start=pe;
+        } else if (pos==list_size) {
+            push_back(t);
+            return;
+        } else {
+            Elem<T> * target = start; 
+            for (unsigned int i = 0; i<pos; ++i){
+                target = target->get_next();
+            }
+            Elem<T> * pe = new Elem<T>(t);
+            (target->get_prev())->set_next(pe);
+            pe->set_prev(target->get_prev());
+            target->set_prev(pe);
+            pe->set_next(target);
+            
         }
-        Elem<T> * pe = new Elem<T>(t, target);
-        (target->get_prev())->set_next(pe);
-        target->set_prev(pe);
+        list_size ++;
+    }
+    void insert(T t, unsigned int pos){
+        T * temp = new T (t);
+        insert(temp, pos);
     }
     void erase(unsigned int in){
         if (!list_size){return;}
@@ -103,15 +120,43 @@ public:
         
     }
     unsigned int size(){return list_size;}
-    
     T operator[](unsigned int in){
         if (in>=list_size){return 0;}
         Elem<T> * target = start;
         for (unsigned int i=0; i<in; ++i){
-            // if (target->get_next()==NULL){continue;}
             target = target->get_next();
         }
         if (target==NULL){return 0;}
         return *(target->get_value());
+    }
+    void pop_back(){
+        if (!list_size){return;}
+        Elem<T> * pe = end;
+        if (end==start){
+            delete end;
+            start=end=NULL;
+        } else {
+        (end->get_prev())->set_next(NULL);
+        end=end->get_prev();
+        delete pe;
+        }
+        list_size--;
+    }
+    void back_step(){
+        Elem<T> * pe = end;
+        unsigned int count =0;
+        std::cout<<"start debug"<<std::endl;
+        while ((pe->get_prev())!=NULL){
+            std::cout<< *(pe->get_value()) << " ";
+            pe = pe->get_prev();
+            count ++;
+            if (count>list_size) {break;}
+        }
+        std::cout<<std::endl<<"stop debug"<<std::endl;
+    }
+    ~List(){
+        while (list_size){
+            pop_back();
+        }
     }
 };
