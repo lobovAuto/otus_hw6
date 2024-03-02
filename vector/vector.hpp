@@ -2,7 +2,7 @@
 
 #include "container.hpp"
 
-#define BASE_ALLOC 10
+const unsigned int BASE_ALLOC=10;
 
 template <class T> class VectorIter;
 template <class T> class Vector : public Container<T> {
