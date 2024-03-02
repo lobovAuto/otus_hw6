@@ -3,9 +3,10 @@
 #include "container.hpp"
 
 template <class T> class List;
-
+template <class T> class ListAlloc;
 template <class T> class Elem{
     friend class List<T>;
+    friend class ListAlloc<T>;
     T * elem;
     Elem<T> * prev;
     Elem<T> * next;
@@ -36,6 +37,7 @@ public:
 
 template <class T> class List : public Container<T>{
 private:
+    friend class ListAlloc<T>;
     Elem<T> * start;
     Elem<T> * end;
     unsigned int list_size=0;
@@ -166,5 +168,25 @@ public:
         while (list_size){
             pop_back();
         }
+    }
+};
+
+template<class T> class ListAlloc : public Allocator<T>{
+    List<T> & list;
+    Elem<T> * pnt; //должна быть нода
+public:
+    ListAlloc(List<T> & t):list(t){}
+    void begin(){pnt = list.start;}
+    void end(){pnt = list.end;}
+    T operator*(){return *pnt->get_value();}
+    ListAlloc & operator++(){
+        if (pnt->next==NULL){return *this;}
+        pnt = pnt->get_next();
+        return *this;    
+    }
+    ListAlloc & operator--(){
+        if (pnt->prev==NULL){return *this;}
+        pnt = pnt->get_prev();
+        return *this;  
     }
 };

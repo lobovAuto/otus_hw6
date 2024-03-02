@@ -68,7 +68,7 @@ public:
     }
 };
 
-template <class T> class VectorAlloc{
+template <class T> class VectorAlloc : public Allocator<T>{
     Vector<T> & vector;
     T * pnt;
 public:
