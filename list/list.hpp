@@ -79,7 +79,7 @@ public:
             start->set_prev(pe);
             pe->set_next(start);
             start=pe;
-        } else if (pos==list_size) {
+        } else if (pos==(list_size+1)) {
             push_back(t);
             return;
         } else {
