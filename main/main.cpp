@@ -43,7 +43,7 @@ template <typename T> void code_demonstration(Container<T> & con, std::string na
     std::cout<<"Конец примера с "<<name<<std::endl;
 }
 
-template <typename T> void plus_minus(Allocator<T> & alloc){
+template <typename T> void plus_minus(Iterator<T> & alloc){
     std::cout<<*alloc<<std::endl;
     std::cout<<"Пробуем уменьшить"<<std::endl;
     --alloc;
@@ -53,7 +53,7 @@ template <typename T> void plus_minus(Allocator<T> & alloc){
     std::cout<<*alloc<<std::endl;
 }
 
-template <typename T> void code_alloc_demonstration(Allocator<T> & alloc, std::string name){
+template <typename T> void code_alloc_demonstration(Iterator<T> & alloc, std::string name){
     std::cout<<"Демонстрация пользовательского кода с итератором для";
     if (name=="vector"){std::cout<<" последовательного";}
     else {std::cout<<" спискового";}
@@ -74,13 +74,13 @@ int main(/*int argc, char *argv[]*/){
     List<unsigned int> a;
     code_demonstration(a, "list");
 
-    ListAlloc<unsigned int> list_it(a);
+    ListIter<unsigned int> list_it(a);
     code_alloc_demonstration(list_it, "list");
 
     Vector<unsigned int> b;
     code_demonstration(b, "vector");
 
-    VectorAlloc<unsigned int> it(b);
+    VectorIter<unsigned int> it(b);
     code_alloc_demonstration(it, "vector");
 
 }

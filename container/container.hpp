@@ -1,9 +1,9 @@
 #pragma once
 
-template <class T> class Allocator;
+template <class T> class Iterator;
 template <class T> class Container{
 private:
-friend class Allocator<T>;
+friend class Iterator<T>;
 public:
     Container(){};
     virtual unsigned int size() const  = 0;
@@ -13,11 +13,11 @@ public:
     virtual T operator[](unsigned int pos) = 0;
 };
 
-template <class T> class Allocator{
+template <class T> class Iterator{
 public:
     virtual void begin() = 0;
     virtual void end() = 0;
     virtual T operator*() = 0;
-    virtual Allocator & operator++()=0;
-    virtual Allocator & operator--()=0;
+    virtual Iterator & operator++()=0;
+    virtual Iterator & operator--()=0;
 };

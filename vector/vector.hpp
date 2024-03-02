@@ -4,9 +4,9 @@
 
 #define BASE_ALLOC 10
 
-template <class T> class VectorAlloc;
+template <class T> class VectorIter;
 template <class T> class Vector : public Container<T> {
-    friend class VectorAlloc<T>;
+    friend class VectorIter<T>;
 
     unsigned int fact_syze;
     unsigned int alloc_syze;
@@ -68,20 +68,20 @@ public:
     }
 };
 
-template <class T> class VectorAlloc : public Allocator<T>{
+template <class T> class VectorIter : public Iterator<T>{
     Vector<T> & vector;
     T * pnt;
 public:
-    VectorAlloc(Vector<T> & t):vector(t){}
+    VectorIter(Vector<T> & t):vector(t){}
     void begin(){pnt = vector.get_start();}
     void end(){pnt = vector.get_end();}
     T operator*(){return *pnt;}
-    VectorAlloc & operator++(){
+    VectorIter & operator++(){
         if (pnt==vector.get_end()){return *this;}
         pnt = pnt + 1;
         return *this;    
     }
-    VectorAlloc & operator--(){
+    VectorIter & operator--(){
         if (pnt==vector.get_start()){return *this;}
         pnt = pnt - 1;
         return *this;  

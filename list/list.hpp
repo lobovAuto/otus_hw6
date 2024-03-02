@@ -3,10 +3,10 @@
 #include "container.hpp"
 
 template <class T> class List;
-template <class T> class ListAlloc;
+template <class T> class ListIter;
 template <class T> class Elem{
     friend class List<T>;
-    friend class ListAlloc<T>;
+    friend class ListIter<T>;
     T * elem;
     Elem<T> * prev;
     Elem<T> * next;
@@ -37,7 +37,7 @@ public:
 
 template <class T> class List : public Container<T>{
 private:
-    friend class ListAlloc<T>;
+    friend class ListIter<T>;
     Elem<T> * start;
     Elem<T> * end;
     unsigned int list_size=0;
@@ -171,20 +171,20 @@ public:
     }
 };
 
-template<class T> class ListAlloc : public Allocator<T>{
+template<class T> class ListIter : public Iterator<T>{
     List<T> & list;
     Elem<T> * pnt; //должна быть нода
 public:
-    ListAlloc(List<T> & t):list(t){}
+    ListIter(List<T> & t):list(t){}
     void begin(){pnt = list.start;}
     void end(){pnt = list.end;}
     T operator*(){return *pnt->get_value();}
-    ListAlloc & operator++(){
+    ListIter & operator++(){
         if (pnt->next==NULL){return *this;}
         pnt = pnt->get_next();
         return *this;    
     }
-    ListAlloc & operator--(){
+    ListIter & operator--(){
         if (pnt->prev==NULL){return *this;}
         pnt = pnt->get_prev();
         return *this;  
