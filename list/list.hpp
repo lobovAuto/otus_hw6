@@ -127,7 +127,7 @@ public:
         list_size--;
         
     }
-    unsigned int size(){return list_size;}
+    unsigned int size() const {return list_size;}
     T operator[](unsigned int in){
         if (in>=list_size){return 0;}
         Elem<T> * target = start;

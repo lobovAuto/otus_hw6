@@ -37,7 +37,7 @@ public:
         end = start+fact_syze;
         alloc_syze=BASE_ALLOC;
     }
-    unsigned int size(){return fact_syze;}
+    unsigned int size() const {return fact_syze;}
     void push_back(T t){
         if (alloc_syze==fact_syze){stratch();}
         start[fact_syze]=t;
