@@ -66,7 +66,7 @@ template <typename T> void code_alloc_demonstration(Iterator<T> & alloc, std::st
     std::cout<<"Перемещаем итератор в конец"<<std::endl;
     alloc.end();
     plus_minus(alloc);
-    std::cout<<"Конец примера с аллокатором"<<std::endl;
+    std::cout<<"Конец примера с итератором"<<std::endl;
 }
 
 int main(/*int argc, char *argv[]*/){
