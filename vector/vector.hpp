@@ -1,9 +1,11 @@
 #pragma once
 
+#include "container.hpp"
+
 #define BASE_ALLOC 10
 
 template <class T> class VectorAlloc;
-template <class T> class Vector {
+template <class T> class Vector : public Container<T> {
     friend class VectorAlloc<T>;
 
     unsigned int fact_syze;
@@ -29,7 +31,7 @@ template <class T> class Vector {
         alloc_syze=new_size;
     }
 public:
-    Vector(){
+    Vector():fact_syze(0){
         start = new T[BASE_ALLOC];
         if (!start){fail();}
         end = start+fact_syze;

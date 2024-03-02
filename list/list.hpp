@@ -1,5 +1,7 @@
 #pragma once
 
+#include "container.hpp"
+
 template <class T> class List;
 
 template <class T> class Elem{
@@ -32,7 +34,7 @@ public:
     T * get_value(){return elem;}
 };
 
-template <class T> class List{
+template <class T> class List : public Container<T>{
 private:
     Elem<T> * start;
     Elem<T> * end;

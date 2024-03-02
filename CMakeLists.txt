@@ -9,6 +9,7 @@ set(INCLUDE_DIRECTORIES
     ${CMAKE_SOURCE_DIR}/main
     ${CMAKE_SOURCE_DIR}/list
     ${CMAKE_SOURCE_DIR}/vector
+    ${CMAKE_SOURCE_DIR}/container
 )
 
 add_executable(${TARGET_NAME}
