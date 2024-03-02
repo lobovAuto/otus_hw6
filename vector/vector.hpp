@@ -46,12 +46,18 @@ public:
     }
     void insert(T t, unsigned int pos){
         if (alloc_syze==fact_syze){stratch();}
+        if (pos>fact_syze){
+            push_back(t);
+        }else {
+
+        
         for (unsigned int i=fact_syze; i>pos; --i){
             start[i]=start[i-1];
         }
         start[pos]=t;
         fact_syze++;
         update_end();
+        }
     }
     void erase(unsigned int pos){
         for (unsigned int i=pos; i<fact_syze; i++){
