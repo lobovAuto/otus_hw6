@@ -107,7 +107,7 @@ public:
             Elem<T> * temp = start;
             start=start->get_next();
             delete temp;
-        } else if (in==list_size){
+        } else if ((in+1)==list_size){
             Elem<T> * temp = end;
             (end->get_prev())->set_next(NULL);
             end = end->get_prev();
