@@ -50,6 +50,7 @@ public:
     }
 
     void insert(const T t, unsigned int pos){
+        if (pos>list_size){throw "error with list size";}
         if (!pos){
             auto pe = new Elem<T>(t);
             start->set_prev(pe);
@@ -116,7 +117,7 @@ public:
         return (target->get_value());
     }
     void pop_back(){
-        if (!list_size){return;}
+        if (!list_size){throw "list is eq zero. you cant pop it!";}
         auto pe = end;
         if (end==start){
             delete end;
