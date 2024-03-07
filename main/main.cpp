@@ -1,6 +1,6 @@
 #include "main.hpp"
 
-#define COUNT 10
+const unsigned int COUNT=10;
 
 template <typename T> void print_info(Container<T> & con, std::string name){
     std::cout<<name<<" size is "<<con.size()<<std::endl;
